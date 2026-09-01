@@ -43,12 +43,19 @@ paths) pointing at the installed console scripts. Point your MCP client at
 
 `crocodash-mcp` needs ESMF/`xesmf`, which are conda-only compiled libraries
 a plain venv can't provide. If you already have a conda env with those
-installed (e.g. whatever env you use for the CrocoDash CLI itself), install
-into it instead of a fresh venv:
+installed (e.g. whatever env you use for the CrocoDash CLI itself), point
+`PYTHON_BIN` at *a clone* of it rather than the env itself:
 
 ```bash
-PYTHON_BIN=/path/to/envs/CrocoDash/bin/python ./setup.sh
+conda create --name mcp-hub --clone CrocoDash
+PYTHON_BIN=/path/to/envs/mcp-hub/bin/python ./setup.sh
 ```
+
+Prefer a clone over installing directly into your working env: the servers'
+dependencies (auth/keyring/crypto libraries pulled in by `fastmcp`) are
+extra weight you likely don't want mixed into an env you use for other
+work, and a clone means an update or cleanup of one env can't affect the
+other.
 
 ## Updating the vendored servers
 
