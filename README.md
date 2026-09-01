@@ -41,6 +41,15 @@ and generates `mcp.local.json` (git-ignored, since it contains absolute
 paths) pointing at the installed console scripts. Point your MCP client at
 `mcp.local.json` instead of `mcp.json`.
 
+`crocodash-mcp` needs ESMF/`xesmf`, which are conda-only compiled libraries
+a plain venv can't provide. If you already have a conda env with those
+installed (e.g. whatever env you use for the CrocoDash CLI itself), install
+into it instead of a fresh venv:
+
+```bash
+PYTHON_BIN=/path/to/envs/CrocoDash/bin/python ./setup.sh
+```
+
 ## Updating the vendored servers
 
 The submodules are pinned to specific commits. To bump all three to the
