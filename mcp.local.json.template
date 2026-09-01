@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "crocodash": {
+      "command": "__VENV_BIN__/crocodash-mcp"
+    },
+    "regional-ocean-debugger": {
+      "command": "__VENV_BIN__/regional-ocean-debugger-mcp"
+    },
+    "cesm-runner": {
+      "command": "__VENV_BIN__/cesm-runner-mcp"
+    }
+  }
+}

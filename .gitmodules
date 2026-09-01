@@ -1,0 +1,9 @@
+[submodule "servers/crocodash"]
+	path = servers/crocodash
+	url = https://github.com/CROCODILE-CESM/MCP_CrocoDash.git
+[submodule "servers/regional-ocean-debugger"]
+	path = servers/regional-ocean-debugger
+	url = https://github.com/CROCODILE-CESM/MCP_regional_ocean_debugger.git
+[submodule "servers/cesm-runner"]
+	path = servers/cesm-runner
+	url = https://github.com/CROCODILE-CESM/MCP_cesm_runner.git
