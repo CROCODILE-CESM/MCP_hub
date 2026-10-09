@@ -3,22 +3,33 @@
     "crocodash": {
       "command": "uvx",
       "args": [
-        "--from", "git+https://github.com/CROCODILE-CESM/MCP_CrocoDash",
+        "--from",
+        "git+https://github.com/CROCODILE-CESM/MCP_CrocoDash",
         "crocodash-mcp"
       ]
     },
     "regional-ocean-debugger": {
       "command": "uvx",
       "args": [
-        "--from", "git+https://github.com/CROCODILE-CESM/MCP_regional_ocean_debugger",
+        "--from",
+        "git+https://github.com/CROCODILE-CESM/MCP_regional_ocean_debugger",
         "regional-ocean-debugger-mcp"
       ]
     },
     "cesm-runner": {
       "command": "uvx",
       "args": [
-        "--from", "git+https://github.com/CROCODILE-CESM/MCP_cesm_runner",
+        "--from",
+        "git+https://github.com/CROCODILE-CESM/MCP_cesm_runner",
         "cesm-runner-mcp"
+      ]
+    },
+    "mom6-tools": {
+      "command": "uvx",
+      "args": [
+        "--from",
+        "git+https://github.com/CROCODILE-CESM/MCP_mom6_tools",
+        "mom6-tools-mcp"
       ]
     }
   }

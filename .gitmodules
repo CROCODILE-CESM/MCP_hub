@@ -7,3 +7,6 @@
 [submodule "servers/cesm-runner"]
 	path = servers/cesm-runner
 	url = https://github.com/CROCODILE-CESM/MCP_cesm_runner.git
+[submodule "servers/mom6-tools"]
+	path = servers/mom6-tools
+	url = https://github.com/CROCODILE-CESM/MCP_mom6_tools.git

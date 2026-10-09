@@ -8,6 +8,12 @@
     },
     "cesm-runner": {
       "command": "__VENV_BIN__/cesm-runner-mcp"
+    },
+    "mom6-tools": {
+      "command": "__VENV_BIN__/mom6-tools-mcp",
+      "env": {
+        "MOM6_TOOLS_PYTHON": "__MOM6_TOOLS_PYTHON__"
+      }
     }
   }
 }

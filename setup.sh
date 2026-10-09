@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Sets up all three MCP servers in one local Python environment, for use on
+# Sets up all four MCP servers in one local Python environment, for use on
 # machines without outbound internet access at launch time (e.g. HPC compute
 # nodes). Generates mcp.local.json pointing an MCP client at the installed
 # console scripts.
@@ -53,14 +53,20 @@ else
     PIP_BIN="$BIN_DIR/pip"
 fi
 
-echo "==> Installing all three servers (editable)"
+echo "==> Installing all four servers (editable)"
 "$PIP_BIN" install --upgrade pip -q
 "$PIP_BIN" install -e "$HUB_ROOT/servers/crocodash" \
                     -e "$HUB_ROOT/servers/regional-ocean-debugger" \
-                    -e "$HUB_ROOT/servers/cesm-runner"
+                    -e "$HUB_ROOT/servers/cesm-runner" \
+                    -e "$HUB_ROOT/servers/mom6-tools"
 
 echo "==> Generating mcp.local.json"
-sed "s#__VENV_BIN__#$BIN_DIR#g" "$HUB_ROOT/mcp.local.json.template" > "$HUB_ROOT/mcp.local.json"
+# mom6-tools runs its library work in the mom6-tools conda env: pass that env's
+# python as MOM6_TOOLS_PYTHON. Left unset, it uses the hub env's own python,
+# which only works if mom6_tools is installed there.
+sed -e "s#__VENV_BIN__#$BIN_DIR#g" \
+    -e "s#__MOM6_TOOLS_PYTHON__#${MOM6_TOOLS_PYTHON:-$BIN_DIR/python}#g" \
+    "$HUB_ROOT/mcp.local.json.template" > "$HUB_ROOT/mcp.local.json"
 
 echo
 echo "Done. Point your MCP client at:"

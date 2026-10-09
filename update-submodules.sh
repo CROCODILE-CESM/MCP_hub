@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Bumps all three vendored servers to the latest commit on their main branch
+# Bumps all vendored servers to the latest commit on their main branch
 # and stages the resulting pointer changes for review/commit.
 set -euo pipefail
 

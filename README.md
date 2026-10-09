@@ -1,6 +1,6 @@
 # MCP_hub
 
-Single entry point for the CROCODILE-CESM MCP servers. Wires up all three
+Single entry point for the CROCODILE-CESM MCP servers. Wires up all four
 so an MCP client (Claude Desktop, Claude Code, Cursor, etc.) can load them
 together, and vendors the source of each as a submodule for offline/HPC use.
 
@@ -11,10 +11,11 @@ together, and vendors the source of each as a submodule for offline/HPC use.
 | `crocodash` | [MCP_CrocoDash](https://github.com/CROCODILE-CESM/MCP_CrocoDash) | Configure and deploy regional MOM6 ocean models within CESM (create/process/bundle a case) |
 | `cesm-runner` | [MCP_cesm_runner](https://github.com/CROCODILE-CESM/MCP_cesm_runner) | Drive a CESM case through setup, build, submit, and monitoring (bare-metal or container) |
 | `regional-ocean-debugger` | [MCP_regional_ocean_debugger](https://github.com/CROCODILE-CESM/MCP_regional_ocean_debugger) | Post-run diagnostics and scientific guidance for MOM6/CESM runs |
+| `mom6-tools` | [MCP_mom6_tools](https://github.com/CROCODILE-CESM/MCP_mom6_tools) | Visualize and debug regional MOM6 output: mom6-tools' regional notebooks filled in for a case, plus run summaries, maps, sections, OBC and GLORYS checks as PNG/JSON |
 
 They're designed to be used together across a run's lifecycle: `crocodash`
 creates and configures a case, `cesm-runner` builds/submits/monitors it, and
-`regional-ocean-debugger` helps diagnose the result. See each server's own
+`regional-ocean-debugger` and `mom6-tools` help diagnose and visualize the result. See each server's own
 `server.py` docstring for the exact deployment paths (HPC batch queue, HPC +
 container, laptop + container).
 
@@ -24,6 +25,14 @@ No local checkout needed. Requires [`uv`](https://docs.astral.sh/uv/) and
 outbound internet access at launch time. Point your MCP client's config at
 this repo's [mcp.json](mcp.json), or copy its `mcpServers` block into your
 client's own config file.
+
+### mom6-tools library environment
+
+`mom6-tools` runs its library work in a separate conda env, so the server
+itself only needs `fastmcp`. Set `MOM6_TOOLS_PYTHON` to that env's python (an
+`"env"` block in your MCP client config). The env needs mom6_tools, xarray,
+xgcm, cartopy and cmocean, plus nbclient and ipykernel to execute notebooks.
+Without it, the server uses its own interpreter and reports what is missing.
 
 ## Offline / HPC setup
 
@@ -36,7 +45,7 @@ cd MCP_hub
 ./setup.sh
 ```
 
-This creates a single venv, installs all three servers into it (editable),
+This creates a single venv, installs all four servers into it (editable),
 and generates `mcp.local.json` (git-ignored, since it contains absolute
 paths) pointing at the installed console scripts. Point your MCP client at
 `mcp.local.json` instead of `mcp.json`.
@@ -48,7 +57,9 @@ installed (e.g. whatever env you use for the CrocoDash CLI itself), point
 
 ```bash
 conda create --name mcp-hub --clone CrocoDash
-PYTHON_BIN=/path/to/envs/mcp-hub/bin/python ./setup.sh
+PYTHON_BIN=/path/to/envs/mcp-hub/bin/python \
+MOM6_TOOLS_PYTHON=/path/to/envs/mom6-tools/bin/python \
+  ./setup.sh
 ```
 
 Prefer a clone over installing directly into your working env: the servers'
@@ -59,7 +70,7 @@ other.
 
 ## Updating the vendored servers
 
-The submodules are pinned to specific commits. To bump all three to the
+The submodules are pinned to specific commits. To bump all of them to the
 latest `main`:
 
 ```bash
@@ -79,4 +90,5 @@ servers/
   crocodash/                  # submodule -> MCP_CrocoDash
   cesm-runner/                # submodule -> MCP_cesm_runner
   regional-ocean-debugger/    # submodule -> MCP_regional_ocean_debugger
+  mom6-tools/                 # submodule -> MCP_mom6_tools
 ```
