@@ -37,7 +37,7 @@ Without it, the server uses its own interpreter and reports what is missing.
 ## Offline / HPC setup
 
 Compute nodes often lack outbound internet access, so `uvx --from git+...`
-won't work there. Instead, vendor and install all three servers locally:
+won't work there. Instead, vendor and install all four servers locally:
 
 ```bash
 git clone --recurse-submodules https://github.com/CROCODILE-CESM/MCP_hub.git
